@@ -50,7 +50,7 @@ export function getGuestFromPath(pathname: string): string | null {
 // ── Google Sheets (RSVP + Wishes) ──────────────────────────────
 // Apps Script Web App URL (google-apps-script/code.gs deployment).
 export const APPS_SCRIPT_URL =
-  'https://script.google.com/macros/s/AKfycbxoEqzVdGbv50EXHZ7-yKozdUhYlpWbM0Q3xq3_LXDs6q2WPSriGUSK1SMywczCQKTx/exec';
+  'https://script.google.com/macros/s/AKfycbyWscK2YUkkAwZ4cU2SYDSGL4hzUOJbsbt4QkK1Xnzqa2zF6AhKJn9e1TDkfJCev11e/exec';
 
 /** Send a row to the Google Sheet. Resolves on success, throws on failure. */
 export async function submitToSheet(sheet: 'RSVP' | 'WISH', data: Record<string, string>) {
