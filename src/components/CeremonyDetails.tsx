@@ -30,7 +30,7 @@ export const CeremonyDetails: React.FC = () => {
             </h2>
             
             <p className="text-stone-500/90 font-serif text-lg sm:text-xl leading-relaxed mb-16 max-w-lg">
-              We are honored to invite you to witness our union as we step onto the Poruwa amid the blessings of our families, followed by our wedding ceremony and an evening of celebration at Water's Edge.
+              We are honored to invite you to witness our union as we step onto the Poruwa amid the blessings of our families, followed by our wedding ceremony and an evening of celebration at Waters Edge.
             </p>
 
             {/* Premium Timeline */}
@@ -54,7 +54,7 @@ export const CeremonyDetails: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-serif text-2xl sm:text-3xl text-stone-800 mb-2 group-hover:text-brand-beige-deep transition-colors duration-500">05:00 PM</h4>
-                  <p className="text-stone-500/80 text-[10px] sm:text-[11px] uppercase tracking-[0.3em] font-bold">Poruwa Ceremony — Water's Edge Garden Area</p>
+                  <p className="text-stone-500/80 text-[10px] sm:text-[11px] uppercase tracking-[0.3em] font-bold">Poruwa Ceremony — Waters Edge Garden Area</p>
                 </div>
               </div>
 
@@ -65,7 +65,7 @@ export const CeremonyDetails: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-serif text-2xl sm:text-3xl text-stone-800 mb-2 group-hover:text-brand-beige-deep transition-colors duration-500">Grand Ballroom</h4>
-                  <p className="text-stone-500/80 text-[10px] sm:text-[11px] uppercase tracking-[0.3em] font-bold">Water's Edge Hotel, Battaramulla · 6:30 PM Onwards</p>
+                  <p className="text-stone-500/80 text-[10px] sm:text-[11px] uppercase tracking-[0.3em] font-bold">Waters Edge Hotel, Battaramulla · 6:30 PM Onwards</p>
                 </div>
               </div>
             </div>

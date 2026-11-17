@@ -91,7 +91,7 @@ export const Location: React.FC = () => {
             <div className="absolute inset-0 bg-brand-beige/10 mix-blend-multiply pointer-events-none z-20 group-hover/map:opacity-0 transition-opacity duration-1000" />
             
             <iframe
-              title="Water's Edge Hotel Location"
+              title="Waters Edge Hotel Location"
               src={mapUrl}
               width="100%"
               height="100%"

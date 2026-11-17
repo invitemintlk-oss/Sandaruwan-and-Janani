@@ -11,9 +11,9 @@ export const WEDDING = {
   dayLong: 'Thursday, 24th December 2026',
   dateDots: '24 . 12 . 2026',
   venue: 'Grand Ballroom',
-  hotel: "Water's Edge Hotel",
+  hotel: "Waters Edge Hotel",
   city: 'Battaramulla',
-  gardenArea: "Water's Edge Garden Area",
+  gardenArea: "Waters Edge Garden Area",
   mapsQuery: 'Waters Edge, Battaramulla, Sri Lanka',
 };
 
