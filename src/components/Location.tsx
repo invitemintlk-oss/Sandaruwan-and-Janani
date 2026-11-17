@@ -46,7 +46,13 @@ export const Location: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-2xl font-serif text-stone-800 mb-1">{WEDDING.venue}, {WEDDING.hotel}</p>
-                  <p className="text-[11px] uppercase tracking-[0.2em] font-medium text-stone-400 leading-relaxed mb-6">{WEDDING.city} · Poruwa at the {WEDDING.gardenArea}</p>
+                  <p className="text-[11px] uppercase tracking-[0.2em] font-medium text-stone-400 leading-relaxed mb-2">{WEDDING.city}</p>
+                  <p className="inline-block text-[11px] uppercase tracking-[0.25em] font-bold text-brand-beige-deep bg-brand-champagne/70 border border-brand-beige/40 rounded-full px-4 py-1.5 mb-3">
+                    6:30 PM Onwards
+                  </p>
+                  <p className="text-sm font-serif italic text-stone-500 mb-6">
+                    Poruwa Ceremony at 5:00 PM · {WEDDING.gardenArea}
+                  </p>
                   
                   <p className="text-stone-500/90 italic font-serif text-lg leading-relaxed max-w-sm mb-10 pl-4 border-l-[1.5px] border-brand-beige/40">
                     "A serene and elegant setting where we will begin our new chapter together."
@@ -85,7 +91,7 @@ export const Location: React.FC = () => {
             <div className="absolute inset-0 bg-brand-beige/10 mix-blend-multiply pointer-events-none z-20 group-hover/map:opacity-0 transition-opacity duration-1000" />
             
             <iframe
-              title="Waters Edge Hotel Location"
+              title="Water's Edge Hotel Location"
               src={mapUrl}
               width="100%"
               height="100%"

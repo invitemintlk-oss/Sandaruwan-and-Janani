@@ -10,8 +10,8 @@ export function CountdownTimer() {
   }>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    // December 24, 2026, 4:30 PM (Sri Lanka)
-    const targetDate = new Date('2026-12-24T16:30:00+05:30').getTime();
+    // December 24, 2026, 5:00 PM (Sri Lanka)
+    const targetDate = new Date('2026-12-24T17:00:00+05:30').getTime();
 
     const interval = setInterval(() => {
       const now = new Date().getTime();

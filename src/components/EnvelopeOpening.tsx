@@ -27,7 +27,7 @@ export function EnvelopeOpening({ onComplete, onMusicStart, guestName }: { onCom
           width: 100%;
           min-height: 100%;
           margin: 0;
-          background: #fbe4d8;
+          background: #f0c7b0;
         }
 
         .scene {
@@ -37,7 +37,7 @@ export function EnvelopeOpening({ onComplete, onMusicStart, guestName }: { onCom
           align-items: center;
           justify-content: center;
           padding: 20px;
-          background: radial-gradient(ellipse at 30% 20%, #fde6da 0%, #f6dfd2 40%, #f0c3ad 100%);
+          background: radial-gradient(ellipse at 30% 20%, #f6d0bc 0%, #eebca1 45%, #dc9a7a 100%);
           perspective: 1500px;
           overflow: hidden;
           font-family: "Cormorant Garamond", serif;
@@ -84,7 +84,7 @@ export function EnvelopeOpening({ onComplete, onMusicStart, guestName }: { onCom
         .envelope-base {
           position: absolute;
           inset: 0;
-          background: linear-gradient(145deg, #fde6da, #f9ddd0);
+          background: linear-gradient(145deg, #f3c9b2, #ebb99e);
           border-radius: 6px;
           box-shadow: 0 30px 60px -15px rgba(154,85,65,0.3), 0 0 0 1px rgba(224,162,124,0.1);
           z-index: 1;
@@ -94,7 +94,7 @@ export function EnvelopeOpening({ onComplete, onMusicStart, guestName }: { onCom
         .card-container {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, #fffbf8 0%, #fff7f2 50%, #fff0e8 100%);
+          background: linear-gradient(180deg, #fdf0e7 0%, #fae5d7 50%, #f6dac8 100%);
           border-radius: 6px;
           z-index: 2;
           overflow: hidden;
@@ -260,7 +260,7 @@ export function EnvelopeOpening({ onComplete, onMusicStart, guestName }: { onCom
           left: 0;
           width: 66%;
           height: 100%;
-          background: linear-gradient(135deg, #fbe2d5 0%, #f6d3c1 50%, #fce6da 100%);
+          background: linear-gradient(135deg, #f4cdb8 0%, #ecbca2 50%, #f5d2bf 100%);
           background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
           border-right: 1px solid rgba(224,162,124,0.15);
           box-shadow: 10px 0 30px -10px rgba(154,85,65,0.25);

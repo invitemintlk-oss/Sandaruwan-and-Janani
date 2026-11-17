@@ -1,19 +1,19 @@
 // Single source of truth for this wedding's details.
 export const WEDDING = {
   groomName: 'Sandaruwan',
-  brideName: 'Janani',
-  groomFullName: 'T L Sandaruwan Peris',
+  brideName: 'Kavindya',
+  groomFullName: 'T L Sandaruwan Peiris',
   brideFullName: 'Kavindya Janani Hettige',
-  groomParents: ['Mr. C. Peiris', 'Mrs. K. Sriyani'],
-  brideParents: ['Mr. H. Nihal', 'Mrs. T. M. Liyanage'],
-  // Guest arrival time, Sri Lanka time (UTC+05:30)
-  date: new Date('2026-12-24T16:30:00+05:30'),
+  groomParents: ['Mr. Chandrasiri Peiris', 'Mrs. Kankanamge Sriyani'],
+  brideParents: ['Mr. Hettige Nihal', 'Mrs. Thilaka Madagama Liyanage'],
+  // Poruwa ceremony start, Sri Lanka time (UTC+05:30)
+  date: new Date('2026-12-24T17:00:00+05:30'),
   dayLong: 'Thursday, 24th December 2026',
   dateDots: '24 . 12 . 2026',
   venue: 'Grand Ballroom',
-  hotel: "Waters Edge Hotel",
+  hotel: "Water's Edge Hotel",
   city: 'Battaramulla',
-  gardenArea: 'Waters Edge Garden Area',
+  gardenArea: "Water's Edge Garden Area",
   mapsQuery: 'Waters Edge, Battaramulla, Sri Lanka',
 };
 

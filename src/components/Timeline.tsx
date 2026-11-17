@@ -1,11 +1,10 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Heart, Users, Sparkles, Utensils } from 'lucide-react';
+import { Heart, Sparkles, Utensils } from 'lucide-react';
 
 const events = [
-  { time: '04:30 PM', title: 'Guest Arrival', icon: Users, desc: 'Welcoming our loved ones at the Poruwa ceremony area, Waters Edge Garden Area' },
-  { time: '05:00 PM', title: 'Poruwa Ceremony', icon: Sparkles, desc: 'Our traditional Poruwa ceremony amid the blessings of our families' },
-  { time: '06:30 PM', title: 'Wedding Ceremony', icon: Heart, desc: 'In the Grand Ballroom, Waters Edge Hotel' },
+  { time: '05:00 PM', title: 'Poruwa Ceremony', icon: Sparkles, desc: "Our traditional Poruwa ceremony at the Water's Edge Garden Area" },
+  { time: '06:30 PM', title: 'Wedding Ceremony', icon: Heart, desc: "Grand Ballroom, Water's Edge Hotel · 6:30 PM onwards" },
   { time: '08:00 PM', title: 'Wedding Dinner', icon: Utensils, desc: 'An evening of dinner and celebration together' },
 ];
 

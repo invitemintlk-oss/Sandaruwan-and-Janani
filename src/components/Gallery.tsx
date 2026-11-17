@@ -95,8 +95,8 @@ export const Gallery: React.FC = () => {
         </div>
 
         {/* Soft edge blur overlays to blend carousel into the page */}
-        <div className="absolute top-0 left-0 w-16 sm:w-40 h-full bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
-        <div className="absolute top-0 right-0 w-16 sm:w-40 h-full bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
+        <div className="absolute top-0 left-0 w-16 sm:w-40 h-full bg-gradient-to-r from-brand-sand to-transparent pointer-events-none z-10" />
+        <div className="absolute top-0 right-0 w-16 sm:w-40 h-full bg-gradient-to-l from-brand-sand to-transparent pointer-events-none z-10" />
       </motion.div>
 
       {/* Fullscreen Premium Overlay */}

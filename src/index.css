@@ -3,14 +3,14 @@
 
 @theme {
   /* Peach Color Palette (token names kept for compatibility) */
-  --color-brand-beige: #f2b49b;       /* soft peach */
-  --color-brand-beige-deep: #c76f55;  /* deep peach / terracotta accent */
-  --color-brand-champagne: #fde6da;   /* peach blush */
-  --color-brand-ivory: #fff7f2;       /* peach-tinted ivory */
-  --color-brand-gold: #e0a27c;        /* peach gold */
-  --color-brand-gold-light: #f8d6c3;
-  --color-brand-mocha: #9a5541;
-  --color-brand-sand: #f6dfd2;
+  --color-brand-beige: #e9a083;       /* soft peach */
+  --color-brand-beige-deep: #b45a40;  /* deep peach / terracotta accent */
+  --color-brand-champagne: #f6d0bc;   /* peach blush */
+  --color-brand-ivory: #fae3d5;       /* peach-tinted ivory */
+  --color-brand-gold: #d08c62;        /* peach gold */
+  --color-brand-gold-light: #efc0a4;
+  --color-brand-mocha: #8a4631;
+  --color-brand-sand: #f3d4c2;
 
   --font-serif: "Cormorant Garamond", serif;
   --font-display: "Great Vibes", cursive;

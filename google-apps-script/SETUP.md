@@ -6,7 +6,7 @@ The script creates two tabs automatically, each with a styled peach header row:
 
 | Tab      | Columns                                                          |
 | -------- | ---------------------------------------------------------------- |
-| `RSVP`   | Timestamp, Name, Attendance, Guests, Dietary Notes, Invited As   |
+| `RSVP`   | Timestamp, Name, Attendance, Guests, Kids (Below 10), Dietary Notes, Invited As |
 | `Wishes` | Timestamp, Name, Message, Invited As                             |
 
 "Invited As" is filled from the personalised link (e.g. `Mr. Sanjaya`), so you can see who replied from which invitation.
@@ -24,7 +24,7 @@ The script creates two tabs automatically, each with a styled peach header row:
 5. The current URL is already hardcoded in `src/config.ts` (`APPS_SCRIPT_URL`). Only change it if you create a *new* deployment.
 
 To check it's live, open the `/exec` URL in a browser. It should say
-`"Sandaruwan & Janani wedding endpoint is running."`
+`"Sandaruwan & Kavindya wedding endpoint is running."`
 
 **If you edit `code.gs` later:** go to Deploy → Manage deployments → ✏️ → Version: *New version* → Deploy.
 The URL stays the same.

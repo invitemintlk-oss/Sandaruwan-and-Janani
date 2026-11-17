@@ -1,13 +1,17 @@
 /**
- * Sandaruwan & Janani — Wedding RSVP + Wishes → Google Sheets
+ * Sandaruwan & Kavindya — Wedding RSVP + Wishes → Google Sheets
  *
  * Writes to two separate tabs, created automatically with styled headers:
- *   • "RSVP"   – Timestamp | Name | Attendance | Guests | Dietary Notes | Invited As
+ *   • "RSVP"   – Timestamp | Name | Attendance | Guests | Kids (Below 10) | Dietary Notes | Invited As
  *   • "Wishes" – Timestamp | Name | Message | Invited As
+ *
+ * Existing tabs are upgraded automatically: any missing column (e.g. "Kids (Below 10)")
+ * is inserted in the right place, and rows are written by header name.
  *
  * Deploy: Deploy → New deployment → Web app
  *   Execute as: Me   |   Who has access: Anyone
  * The /exec URL is set in src/config.ts (APPS_SCRIPT_URL).
+ * After editing this file: Deploy → Manage deployments → ✏️ → Version: New version → Deploy.
  */
 
 const SPREADSHEET_ID = '1O65cidRgd7bIf7DiWYmUtd2NAIdpdrYHHjooX3rh2qk';
@@ -16,30 +20,32 @@ const TIMEZONE = 'Asia/Colombo';
 const SHEETS = {
   RSVP: {
     name: 'RSVP',
-    headers: ['Timestamp', 'Name', 'Attendance', 'Guests', 'Dietary Notes', 'Invited As'],
-    widths: [170, 220, 130, 80, 300, 200],
-    row: (p) => [
-      now_(),
-      clean_(p.name),
-      clean_(p.attendance),
-      clean_(p.guests),
-      clean_(p.dietaryNotes),
-      clean_(p.invitedAs),
+    columns: [
+      { header: 'Timestamp',       width: 170, value: () => now_() },
+      { header: 'Name',            width: 220, value: (p) => clean_(p.name) },
+      { header: 'Attendance',      width: 130, value: (p) => clean_(p.attendance) },
+      { header: 'Guests',          width: 80,  value: (p) => num_(p.guests) },
+      { header: 'Kids (Below 10)', width: 120, value: (p) => num_(p.kids) },
+      { header: 'Dietary Notes',   width: 300, value: (p) => clean_(p.dietaryNotes) },
+      { header: 'Invited As',      width: 200, value: (p) => clean_(p.invitedAs) },
     ],
     required: ['name', 'attendance'],
   },
   WISH: {
     name: 'Wishes',
-    headers: ['Timestamp', 'Name', 'Message', 'Invited As'],
-    widths: [170, 220, 480, 200],
-    row: (p) => [now_(), clean_(p.name), clean_(p.message), clean_(p.invitedAs)],
+    columns: [
+      { header: 'Timestamp',  width: 170, value: () => now_() },
+      { header: 'Name',       width: 220, value: (p) => clean_(p.name) },
+      { header: 'Message',    width: 480, value: (p) => clean_(p.message) },
+      { header: 'Invited As', width: 200, value: (p) => clean_(p.invitedAs) },
+    ],
     required: ['name', 'message'],
   },
 };
 
-const HEADER_BG = '#c76f55'; // deep peach
+const HEADER_BG = '#b45a40'; // deep peach
 const HEADER_FG = '#ffffff';
-const BAND_BG = '#fff3ec';   // light peach banding
+const BAND_BG = '#fbe9de';   // light peach banding
 
 /** Receives form submissions from the invitation website. */
 function doPost(e) {
@@ -60,7 +66,14 @@ function doPost(e) {
     }
 
     const sheet = getSheet_(config);
-    sheet.appendRow(config.row(payload));
+
+    // Write values by header name so column order in the sheet never matters
+    const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0].map(String);
+    const row = headers.map((h) => {
+      const col = config.columns.find((c) => c.header === h);
+      return col ? col.value(payload) : '';
+    });
+    sheet.appendRow(row);
 
     return json_({ ok: true });
   } catch (err) {
@@ -72,10 +85,10 @@ function doPost(e) {
 
 /** Health check — open the /exec URL in a browser to confirm it's live. */
 function doGet() {
-  return json_({ ok: true, message: 'Sandaruwan & Janani wedding endpoint is running.' });
+  return json_({ ok: true, message: 'Sandaruwan & Kavindya wedding endpoint is running.' });
 }
 
-/** Run once from the editor (▶ setup) to create both tabs and authorise the script. */
+/** Run once from the editor (▶ setup) to create/upgrade both tabs and authorise the script. */
 function setup() {
   Object.keys(SHEETS).forEach((k) => getSheet_(SHEETS[k]));
 }
@@ -85,41 +98,73 @@ function setup() {
 function getSheet_(config) {
   const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   let sheet = ss.getSheetByName(config.name);
-  if (!sheet) sheet = ss.insertSheet(config.name);
+  const isNew = !sheet;
+  if (isNew) sheet = ss.insertSheet(config.name);
 
-  const needsHeaders =
-    sheet.getLastRow() === 0 ||
-    String(sheet.getRange(1, 1).getValue()).trim() !== config.headers[0];
+  const wanted = config.columns.map((c) => c.header);
 
-  if (needsHeaders) {
-    if (sheet.getLastRow() > 0) sheet.insertRowBefore(1);
-    const header = sheet.getRange(1, 1, 1, config.headers.length);
-    header
-      .setValues([config.headers])
-      .setFontWeight('bold')
-      .setFontColor(HEADER_FG)
-      .setBackground(HEADER_BG)
-      .setHorizontalAlignment('center')
-      .setVerticalAlignment('middle');
-    sheet.setRowHeight(1, 32);
-    sheet.setFrozenRows(1);
-    config.widths.forEach((w, i) => sheet.setColumnWidth(i + 1, w));
+  // Brand-new or empty tab: write all headers at once
+  if (sheet.getLastRow() === 0) {
+    sheet.getRange(1, 1, 1, wanted.length).setValues([wanted]);
+    styleSheet_(sheet, config);
+    return sheet;
+  }
 
-    // Wrap long text columns, banding for readability
-    sheet.getRange(2, 1, sheet.getMaxRows() - 1, config.headers.length)
+  // Existing tab whose first row isn't a header row: insert one on top
+  if (String(sheet.getRange(1, 1).getValue()).trim() !== wanted[0]) {
+    sheet.insertRowBefore(1);
+    sheet.getRange(1, 1, 1, wanted.length).setValues([wanted]);
+    styleSheet_(sheet, config);
+    return sheet;
+  }
+
+  // Existing header row: insert any missing columns in their intended position
+  let changed = false;
+  wanted.forEach((header, i) => {
+    const current = sheet.getRange(1, 1, 1, Math.max(sheet.getLastColumn(), 1)).getValues()[0].map(String);
+    if (current.indexOf(header) !== -1) return;
+    const prev = i > 0 ? current.indexOf(wanted[i - 1]) : -1; // 0-based
+    const insertAt = prev >= 0 ? prev + 2 : current.length + 1; // 1-based column
+    if (insertAt <= sheet.getLastColumn()) {
+      sheet.insertColumnBefore(insertAt);
+    }
+    sheet.getRange(1, insertAt).setValue(header);
+    changed = true;
+  });
+  if (changed) styleSheet_(sheet, config);
+  return sheet;
+}
+
+function styleSheet_(sheet, config) {
+  const lastCol = sheet.getLastColumn();
+  sheet.getRange(1, 1, 1, lastCol)
+    .setFontWeight('bold')
+    .setFontColor(HEADER_FG)
+    .setBackground(HEADER_BG)
+    .setHorizontalAlignment('center')
+    .setVerticalAlignment('middle');
+  sheet.setRowHeight(1, 32);
+  sheet.setFrozenRows(1);
+
+  const headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0].map(String);
+  headers.forEach((h, i) => {
+    const col = config.columns.find((c) => c.header === h);
+    if (col) sheet.setColumnWidth(i + 1, col.width);
+  });
+
+  if (sheet.getMaxRows() > 1) {
+    sheet.getRange(2, 1, sheet.getMaxRows() - 1, lastCol)
       .setWrap(true)
       .setVerticalAlignment('top');
-    try {
-      sheet.getRange(1, 1, sheet.getMaxRows(), config.headers.length)
-        .applyRowBanding(SpreadsheetApp.BandingTheme.LIGHT_GREY, true, false)
-        .setHeaderRowColor(HEADER_BG)
-        .setFirstRowColor('#ffffff')
-        .setSecondRowColor(BAND_BG);
-    } catch (_) {
-      // Banding already exists — ignore
-    }
   }
-  return sheet;
+
+  // Re-apply peach banding across all columns
+  sheet.getBandings().forEach((b) => b.remove());
+  sheet.getRange(1, 1, sheet.getMaxRows(), lastCol)
+    .applyRowBanding(SpreadsheetApp.BandingTheme.LIGHT_GREY, true, false)
+    .setHeaderRowColor(HEADER_BG)
+    .setFirstRowColor('#ffffff')
+    .setSecondRowColor(BAND_BG);
 }
 
 function parsePayload_(e) {
@@ -141,6 +186,11 @@ function clean_(value) {
   // Prevent spreadsheet formula injection
   if (/^[=+\-@]/.test(s)) s = "'" + s;
   return s;
+}
+
+function num_(value) {
+  const n = parseInt(value, 10);
+  return isNaN(n) || n < 0 ? 0 : Math.min(n, 20);
 }
 
 function now_() {

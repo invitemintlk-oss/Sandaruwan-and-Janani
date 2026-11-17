@@ -11,6 +11,7 @@ export const RSVPForm: React.FC = () => {
     fullName: '',
     attendance: 'Attending' as Attendance,
     guests: '1',
+    kids: '0',
     dietaryNotes: '',
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -26,11 +27,12 @@ export const RSVPForm: React.FC = () => {
         name: formData.fullName.trim(),
         attendance: formData.attendance,
         guests: formData.attendance === 'Attending' ? formData.guests : '0',
+        kids: formData.attendance === 'Attending' ? formData.kids : '0',
         dietaryNotes: formData.dietaryNotes.trim(),
       });
       setLastAttendance(formData.attendance);
       setStatus('success');
-      setFormData({ fullName: '', attendance: 'Attending', guests: '1', dietaryNotes: '' });
+      setFormData({ fullName: '', attendance: 'Attending', guests: '1', kids: '0', dietaryNotes: '' });
     } catch (error) {
       console.error('Error sending RSVP: ', error);
       setStatus('error');
@@ -156,12 +158,34 @@ export const RSVPForm: React.FC = () => {
                       onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
                     >
                       <option value="1">Just Me (1 Guest)</option>
-                      <option value="2">We are coming! (2 Guests)</option>
+                      <option value="2">2 Guests</option>
                       <option value="3">3 Guests</option>
                       <option value="4">4 Guests</option>
+                      <option value="5">5 Guests</option>
                     </select>
                     <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-brand-beige-deep transition-transform duration-300 group-hover:scale-110">
                       <Heart className="w-5 h-5 fill-brand-beige/30 drop-shadow-sm" />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] uppercase tracking-[0.2em] font-bold text-stone-500 mb-3 ml-2">Kids Below 10 Years</label>
+                  <div className="relative group">
+                    <select
+                      className="w-full bg-white/80 px-6 py-4 rounded-full border border-stone-200/60 focus:ring-2 focus:ring-brand-beige/30 focus:border-brand-beige-deep/40 outline-none transition-all duration-300 appearance-none font-serif italic text-lg shadow-inner text-stone-700 cursor-pointer"
+                      value={formData.kids}
+                      onChange={(e) => setFormData({ ...formData, kids: e.target.value })}
+                    >
+                      <option value="0">No Kids</option>
+                      <option value="1">1 Kid</option>
+                      <option value="2">2 Kids</option>
+                      <option value="3">3 Kids</option>
+                      <option value="4">4 Kids</option>
+                      <option value="5">5 Kids</option>
+                    </select>
+                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-brand-beige-deep transition-transform duration-300 group-hover:scale-110">
+                      <Sparkles className="w-5 h-5 drop-shadow-sm" />
                     </div>
                   </div>
                 </div>
