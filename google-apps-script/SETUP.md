@@ -6,7 +6,7 @@ The script creates two tabs automatically, each with a styled peach header row:
 
 | Tab      | Columns                                                          |
 | -------- | ---------------------------------------------------------------- |
-| `RSVP`   | Timestamp, Name, Attendance, Guests, Kids (Below 10), Dietary Notes, Invited As |
+| `RSVP`   | Timestamp, Name, Guest Of, Attendance, Guests, Kids (Below 10), Dietary Notes, Invited As |
 | `Wishes` | Timestamp, Name, Message, Invited As                             |
 
 "Invited As" is filled from the personalised link (e.g. `Mr. Sanjaya`), so you can see who replied from which invitation.

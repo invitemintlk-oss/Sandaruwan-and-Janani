@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle, Loader2, Heart, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
-import { submitToSheet } from '../config';
+import { submitToSheet, WEDDING } from '../config';
 
 type Attendance = 'Attending' | 'Not Attending';
+type Side = '' | "Bride's Side" | "Groom's Side";
 
 export const RSVPForm: React.FC = () => {
   const [formData, setFormData] = useState({
     fullName: '',
+    side: '' as Side,
     attendance: 'Attending' as Attendance,
     guests: '1',
     kids: '0',
@@ -20,11 +22,16 @@ export const RSVPForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.fullName.trim()) return;
+    if (!formData.side) {
+      toast.error("Please let us know if you are from the bride's or groom's side.");
+      return;
+    }
     setStatus('loading');
 
     try {
       await submitToSheet('RSVP', {
         name: formData.fullName.trim(),
+        side: formData.side,
         attendance: formData.attendance,
         guests: formData.attendance === 'Attending' ? formData.guests : '0',
         kids: formData.attendance === 'Attending' ? formData.kids : '0',
@@ -32,7 +39,7 @@ export const RSVPForm: React.FC = () => {
       });
       setLastAttendance(formData.attendance);
       setStatus('success');
-      setFormData({ fullName: '', attendance: 'Attending', guests: '1', kids: '0', dietaryNotes: '' });
+      setFormData({ fullName: '', side: '', attendance: 'Attending', guests: '1', kids: '0', dietaryNotes: '' });
     } catch (error) {
       console.error('Error sending RSVP: ', error);
       setStatus('error');
@@ -124,6 +131,30 @@ export const RSVPForm: React.FC = () => {
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                   />
+                </div>
+
+                <div>
+                  <label className="block text-[10px] uppercase tracking-[0.2em] font-bold text-stone-500 mb-3 ml-2">You Are a Guest Of</label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {([
+                      { value: "Bride's Side", label: `Bride · ${WEDDING.brideName}` },
+                      { value: "Groom's Side", label: `Groom · ${WEDDING.groomName}` },
+                    ] as { value: Side; label: string }[]).map((opt) => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => setFormData({ ...formData, side: opt.value })}
+                        aria-pressed={formData.side === opt.value}
+                        className={`px-3 py-4 rounded-full border font-serif italic text-base sm:text-lg transition-all duration-300 ${
+                          formData.side === opt.value
+                            ? 'bg-brand-beige-deep text-white border-brand-beige-deep shadow-md'
+                            : 'bg-white/80 text-stone-600 border-stone-200/60 hover:border-brand-beige-deep/40'
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
                 <div>

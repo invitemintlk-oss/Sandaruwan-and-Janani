@@ -2,10 +2,10 @@
  * Sandaruwan & Kavindya — Wedding RSVP + Wishes → Google Sheets
  *
  * Writes to two separate tabs, created automatically with styled headers:
- *   • "RSVP"   – Timestamp | Name | Attendance | Guests | Kids (Below 10) | Dietary Notes | Invited As
+ *   • "RSVP"   – Timestamp | Name | Guest Of | Attendance | Guests | Kids (Below 10) | Dietary Notes | Invited As
  *   • "Wishes" – Timestamp | Name | Message | Invited As
  *
- * Existing tabs are upgraded automatically: any missing column (e.g. "Kids (Below 10)")
+ * Existing tabs are upgraded automatically: any missing column (e.g. "Guest Of", "Kids (Below 10)")
  * is inserted in the right place, and rows are written by header name.
  *
  * Deploy: Deploy → New deployment → Web app
@@ -23,6 +23,7 @@ const SHEETS = {
     columns: [
       { header: 'Timestamp',       width: 170, value: () => now_() },
       { header: 'Name',            width: 220, value: (p) => clean_(p.name) },
+      { header: 'Guest Of',        width: 130, value: (p) => clean_(p.side) },
       { header: 'Attendance',      width: 130, value: (p) => clean_(p.attendance) },
       { header: 'Guests',          width: 80,  value: (p) => num_(p.guests) },
       { header: 'Kids (Below 10)', width: 120, value: (p) => num_(p.kids) },
